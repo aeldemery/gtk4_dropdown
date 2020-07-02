@@ -34,13 +34,13 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
 
         var button = new Gtk.DropDown ();
 
-        var model = new GLib.ListStore (typeof (Pango.FontFamily));
-        button.set_model (model);
+        //var model = new GLib.ListStore (typeof (Pango.FontFamily));
+        button.set_model (fonts_list);
         button.selected = 0;
 
         Gtk.Expression expression;
         Gtk.Expression[] params;
-        expression = new Gtk.ClosureExpression (typeof (string), (GLib.Closure)get_font_family_name, params);
+        expression = new Gtk.ClosureExpression(typeof(string), (GLib.Closure)get_font_family_name, null);
         button.expression = expression;
 
         box.append (button);
@@ -55,9 +55,13 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         }
     }
 
-    string get_font_family_name (uint index)
-    requires (index < fonts_list.get_n_items ()) {
-        return ((Pango.FontFamily) fonts_list.get_item(index)).get_name();
+    //  string get_font_family_name (uint index)
+    //  requires (index < fonts_list.get_n_items ()) {
+    //      return ((Pango.FontFamily) fonts_list.get_item(index)).get_name();
+    //  }
+
+    string get_font_family_name (Pango.FontFamily font) {
+        return font.get_name();
     }
 
     void strings_setup_item_single_line (Gtk.SignalListItemFactory factory, Gtk.ListItem list_item) {
