@@ -1,6 +1,6 @@
 public class Gtk4Demo.StringHolder : GLib.Object {
     public StringHolder (string title, string? icon = null, string? description = null) {
-        this.title = title.dup();
+        this.title = title;
         this.icon = icon;
         this.description = description;
     }
