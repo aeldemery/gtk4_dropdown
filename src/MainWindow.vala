@@ -24,25 +24,47 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         };
 
         this.title = "Drop Downs";
-        this.resizable = false;
+        this.set_default_size (250, -1);
+        //this.resizable = false;
 
         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
         with (box) {
             margin_start = margin_end = margin_bottom = margin_top = 10;
+            hexpand = true;
         }
         this.set_child (box);
 
         var button = new Gtk.DropDown ();
 
-        //var model = new GLib.ListStore (typeof (Pango.FontFamily));
+        // var model = new GLib.ListStore (typeof (Pango.FontFamily));
         button.set_model (fonts_list);
         button.selected = 0;
+        // The following don't work meanwhile :(
+        // Gtk.Expression expression;
+        // Gtk.Expression param = new Gtk.ConstantExpression.for_value(fonts_list.get_item_type());
+        // Gtk.Expression[1] params = {param};
+        // expression = new Gtk.ClosureExpression(typeof(string), (GLib.Closure)get_font_family_name, params);
+        // button.expression = expression;
 
-        Gtk.Expression expression;
-        Gtk.Expression[] params;
-        expression = new Gtk.ClosureExpression(typeof(string), (GLib.Closure)get_font_family_name, null);
-        button.expression = expression;
+        var spin = new Gtk.SpinButton.with_range (-1, fonts_list.get_n_items (), 1);
+        spin.halign = Gtk.Align.START;
+        spin.hexpand = true;
+        button.bind_property ("selected", spin, "value", GLib.BindingFlags.SYNC_CREATE | GLib.BindingFlags.BIDIRECTIONAL);
+        box.append (spin);
 
+        var check = new Gtk.CheckButton.with_label ("Enable search");
+        check.hexpand = true;
+        button.bind_property ("enable-search", check, "active", GLib.BindingFlags.SYNC_CREATE | GLib.BindingFlags.BIDIRECTIONAL);
+        box.append (check);
+
+        button = drop_down_new_from_strings (times, null, null);
+        box.append (button);
+
+        button = drop_down_new_from_strings (many_times, null, null);
+        button.enable_search = true;
+        box.append (button);
+
+        button = drop_down_new_from_strings (device_titles, device_icons, device_descriptions);
         box.append (button);
     }
 
@@ -55,13 +77,17 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         }
     }
 
-    //  string get_font_family_name (uint index)
-    //  requires (index < fonts_list.get_n_items ()) {
-    //      return ((Pango.FontFamily) fonts_list.get_item(index)).get_name();
-    //  }
+    // string get_font_family_name (uint index)
+    // requires (index < fonts_list.get_n_items ()) {
+    // return ((Pango.FontFamily) fonts_list.get_item(index)).get_name();
+    // }
 
     string get_font_family_name (Pango.FontFamily font) {
-        return font.get_name();
+        return font.get_name ();
+    }
+
+    string get_string_title (StringHolder item) {
+        return item.title;
     }
 
     void strings_setup_item_single_line (Gtk.SignalListItemFactory factory, Gtk.ListItem list_item) {
@@ -146,7 +172,8 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
     }
 
     Gtk.DropDown drop_down_new_from_strings (string[] titles, string[] ? icons, string[] ? descriptions)
-    requires (icons.length == titles.length && descriptions.length == titles.length)
+    requires ((icons == null || icons.length == titles.length) &&
+              (descriptions == null || descriptions.length == titles.length))
     {
         var model = strings_model_new (titles, icons, descriptions);
         var factory = strings_factory_new (false);
