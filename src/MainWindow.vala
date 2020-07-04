@@ -79,11 +79,11 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         }
     }
 
-    string get_font_family_name (Pango.FontFamily font) {
+    static string get_font_family_name (Pango.FontFamily font) {
         return font.get_name();
     }
 
-    string get_string_title (StringHolder item) {
+    static string get_string_title (StringHolder item) {
         return item.title;
     }
 
