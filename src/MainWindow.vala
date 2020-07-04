@@ -36,15 +36,14 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
 
         var button = new Gtk.DropDown ();
 
-        // var model = new GLib.ListStore (typeof (Pango.FontFamily));
         button.set_model (fonts_list);
         button.selected = 0;
         // The following don't work meanwhile :(
-        // Gtk.Expression expression;
-        // Gtk.Expression param = new Gtk.ConstantExpression.for_value(fonts_list.get_item_type());
-        // Gtk.Expression[1] params = {param};
-        // expression = new Gtk.ClosureExpression(typeof(string), (GLib.Closure)get_font_family_name, params);
-        // button.expression = expression;
+        Gtk.Expression expression;
+
+        expression = new Gtk.CClosureExpression(typeof(string), null, null, (Callback)get_font_family_name, null, null);
+        button.expression = expression;
+        box.append(button);
 
         var spin = new Gtk.SpinButton.with_range (-1, fonts_list.get_n_items (), 1);
         spin.halign = Gtk.Align.START;
@@ -82,7 +81,11 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
     // return ((Pango.FontFamily) fonts_list.get_item(index)).get_name();
     // }
 
-    string get_font_family_name (Pango.FontFamily font) {
+    string get_font_family_name (Pango.FontFamily font) 
+    requires (font != null) {
+        if (font == null) {
+            print ("error\n");
+        }
         return font.get_name ();
     }
 
