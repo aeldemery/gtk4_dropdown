@@ -10,6 +10,7 @@
 ## Table of Contents
 
 - [About](#about)
+- [Screenshot](#screenshot)
 <!--
 
 - [Getting Started](#getting_started)
@@ -20,6 +21,9 @@
 ## About <a name = "about"></a>
 
 Vala Implementation of Gtk4 Dropdown demo, with exploration of new concepts like `Gtk.Expression`s.
+
+## Screenshot <a name= "screenshot"></a>
+![Screenshot](Screenshot 1.png "Screenshot 1")
 <!--
 ## Getting Started <a name = "getting_started"></a>
 
