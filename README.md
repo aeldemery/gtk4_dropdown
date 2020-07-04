@@ -23,7 +23,7 @@
 Vala Implementation of Gtk4 Dropdown demo, with exploration of new concepts like `Gtk.Expression`s.
 
 ## Screenshot <a name= "screenshot"></a>
-![Screenshot](Screenshot 1.png "Screenshot 1")
+![Screenshot](https://github.com/aeldemery/gtk4_dropdown/blob/master/Screenshot%201.png "Screenshot 1")
 <!--
 ## Getting Started <a name = "getting_started"></a>
 
