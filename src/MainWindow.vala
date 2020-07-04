@@ -25,7 +25,7 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
 
         this.title = "Drop Downs";
         this.set_default_size (250, -1);
-        //this.resizable = false;
+        // this.resizable = false;
 
         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
         with (box) {
@@ -41,9 +41,9 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         // The following don't work meanwhile :(
         Gtk.Expression expression;
 
-        expression = new Gtk.CClosureExpression(typeof(string), null, null, (Callback)get_font_family_name, null, null);
+        expression = new Gtk.CClosureExpression (typeof (string), null, null, (Callback) get_font_family_name, null, null);
         button.expression = expression;
-        box.append(button);
+        box.append (button);
 
         var spin = new Gtk.SpinButton.with_range (-1, fonts_list.get_n_items (), 1);
         spin.halign = Gtk.Align.START;
@@ -61,6 +61,8 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
 
         button = drop_down_new_from_strings (many_times, null, null);
         button.enable_search = true;
+        expression = new Gtk.CClosureExpression (typeof (string), null, null, (Callback) get_string_title, null, null);
+        button.expression = expression;
         box.append (button);
 
         button = drop_down_new_from_strings (device_titles, device_icons, device_descriptions);
@@ -73,20 +75,12 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         font_map.list_families (out font_families);
         foreach (var font in font_families) {
             fonts_list.append (font);
+            print("Font: %s\n", font.get_name());
         }
     }
 
-    // string get_font_family_name (uint index)
-    // requires (index < fonts_list.get_n_items ()) {
-    // return ((Pango.FontFamily) fonts_list.get_item(index)).get_name();
-    // }
-
-    string get_font_family_name (Pango.FontFamily font) 
-    requires (font != null) {
-        if (font == null) {
-            print ("error\n");
-        }
-        return font.get_name ();
+    string get_font_family_name (Pango.FontFamily font) {
+        return font.get_name();
     }
 
     string get_string_title (StringHolder item) {
