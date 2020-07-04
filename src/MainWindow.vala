@@ -40,6 +40,7 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         button.selected = 0;
         // The following don't work meanwhile :(
         Gtk.Expression expression;
+        // BUG
         expression = new Gtk.CClosureExpression (typeof (string), null, null, (Callback) get_font_family_name, null, null);
         button.expression = expression;
         box.append (button);
@@ -60,6 +61,7 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
 
         button = drop_down_new_from_strings (many_times, null, null);
         button.enable_search = true;
+        // BUG
         expression = new Gtk.CClosureExpression (typeof (string), null, null, (Callback) get_string_title, null, null);
         button.expression = expression;
         box.append (button);
