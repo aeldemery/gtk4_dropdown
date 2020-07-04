@@ -40,7 +40,6 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         button.selected = 0;
         // The following don't work meanwhile :(
         Gtk.Expression expression;
-
         expression = new Gtk.CClosureExpression (typeof (string), null, null, (Callback) get_font_family_name, null, null);
         button.expression = expression;
         box.append (button);
@@ -75,7 +74,6 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         font_map.list_families (out font_families);
         foreach (var font in font_families) {
             fonts_list.append (font);
-            print("Font: %s\n", font.get_name());
         }
     }
 
@@ -88,7 +86,7 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
     }
 
     void strings_setup_item_single_line (Gtk.SignalListItemFactory factory, Gtk.ListItem list_item) {
-        var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
+        var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 10);
         var image = new Gtk.Image ();
         var title = new Gtk.Label ("");
         title.xalign = 0.0f;
