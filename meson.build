@@ -1,7 +1,7 @@
 project (
     'github.aeldemery.gtk4_dropdown',
     'c', 'vala',
-    project_version: '0.1.0',
+    version: '0.1.0',
 )
 
 sources = files (
