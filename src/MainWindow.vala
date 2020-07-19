@@ -28,19 +28,20 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         // this.resizable = false;
 
         var box = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
-        with (box) {
-            margin_start = margin_end = margin_bottom = margin_top = 10;
-            hexpand = true;
-        }
+        //  with (box) {
+        //      margin_start = margin_end = margin_bottom = margin_top = 10;
+        //      hexpand = true;
+        //  }
+        box.margin_start = box.margin_end = box.margin_top = box.margin_bottom = 10;
+        box.hexpand = true;
         this.set_child (box);
 
         var button = new Gtk.DropDown ();
 
         button.set_model (fonts_list);
         button.selected = 0;
-        // The following don't work meanwhile :(
+    
         Gtk.Expression expression;
-        // BUG
         expression = new Gtk.CClosureExpression (typeof (string), null, null, (Callback) get_font_family_name, null, null);
         button.expression = expression;
         box.append (button);
@@ -61,7 +62,7 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
 
         button = drop_down_new_from_strings (many_times, null, null);
         button.enable_search = true;
-        // BUG
+        
         expression = new Gtk.CClosureExpression (typeof (string), null, null, (Callback) get_string_title, null, null);
         button.expression = expression;
         box.append (button);
