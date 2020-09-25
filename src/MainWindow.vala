@@ -36,7 +36,7 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
         box.hexpand = true;
         this.set_child (box);
 
-        var button = new Gtk.DropDown ();
+        var button = new Gtk.DropDown (null, null);
 
         button.set_model (fonts_list);
         button.selected = 0;
@@ -183,7 +183,7 @@ public class Gtk4Demo.MainWindow : Gtk.ApplicationWindow {
             list_factory = null;
         }
 
-        var drop_down = new Gtk.DropDown ();
+        var drop_down = new Gtk.DropDown (null, null);
         drop_down.model = model;
         drop_down.factory = factory;
         drop_down.list_factory = list_factory;
